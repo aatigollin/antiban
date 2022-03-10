@@ -80,13 +80,22 @@ namespace Antiban
                 var lastEvent = EventMessages.Count == 0 ? 
                     EventMessages.FirstOrDefault()
                     :
-                    EventMessages.Where(x => x.DateTime <= eventMessage.DateTime)
+                    EventMessages.Where(x => x.DateTime < eventMessage.DateTime)
                         .OrderByDescending(x=>x.DateTime).FirstOrDefault()
                     ;
 
                 if (eventMessage.DateTime < lastEvent?.DateTime.AddSeconds(10))
                 {
                     eventMessage.DateTime = lastEvent.DateTime.AddSeconds(10);
+                    var checkDate = true;
+                    while(checkDate)
+                    {
+                        var check = EventMessages.FirstOrDefault(x => x.DateTime == eventMessage.DateTime);
+                        if (check != null)
+                            eventMessage.DateTime = check.DateTime.AddSeconds(10);
+                        else
+                            checkDate = false;
+                    }
                 }
 
                 EventMessages.Add(eventMessage);
