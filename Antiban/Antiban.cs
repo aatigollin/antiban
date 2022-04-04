@@ -37,11 +37,7 @@ namespace Antiban
                     {
                         if (eventMessage.DateTime < priority1.DateTime.AddDays(1))
                         {
-                            //TODO: чтобы работал по unit test
-                            //eventMessage.DateTime = eventMessage.DateTime.AddDays(1);
-
                             //TODO: чтобы работал по описанию
-                            //+ 24 часа (приоритет = 1) по этому номеру
                             eventMessage.DateTime = priority1.DateTime.AddDays(1);
                         }
                     }
@@ -110,12 +106,7 @@ namespace Antiban
         public List<AntibanResult> GetResult()
         {
             //TODO
-            //Example
             var result = new List<AntibanResult>();
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    result.Add(new AntibanResult());
-            //}
             foreach (var item in EventMessages.OrderBy(x=>x.DateTime).ToList())
             {
                 result.Add(new AntibanResult
